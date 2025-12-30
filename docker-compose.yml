@@ -4,9 +4,7 @@
 
 services:
   vote:
-    build: 
-      context: ./vote
-      target: dev
+    image: <ACR_LOGIN_SERVER>/<acrbilinskyi.azurecr.io>:latest
     depends_on:
       redis:
         condition: service_healthy
@@ -25,7 +23,7 @@ services:
       - back-tier
 
   result:
-    build: ./result
+    image: <ACR_LOGIN_SERVER>/<acrbilinskyi.azurecr.io>:latest
     # use nodemon rather than node for local dev
     entrypoint: nodemon --inspect=0.0.0.0 server.js
     depends_on:
@@ -41,8 +39,7 @@ services:
       - back-tier
 
   worker:
-    build:
-      context: ./worker
+    image: <ACR_LOGIN_SERVER>/<acrbilinskyi.azurecr.io>:latest
     depends_on:
       redis:
         condition: service_healthy 
