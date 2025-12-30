@@ -1,0 +1,44 @@
+name: CI-CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Login to ACR (placeholder)
+      # Тут пізніше буде OIDC або Service Principal login
+
+      - name: Build vote image
+        run: |
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/vote:latest ./vote
+
+      - name: Push vote image
+        run: |
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/vote:latest
+
+      - name: Build result image
+        run: |
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/result:latest ./result
+
+      - name: Push result image
+        run: |
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/result:latest
+
+      - name: Build worker image
+        run: |
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/worker:latest ./worker
+
+      - name: Push worker image
+        run: |
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/worker:latest
