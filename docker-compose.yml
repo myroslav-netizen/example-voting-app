@@ -23,7 +23,7 @@ services:
       - back-tier
 
   result:
-    image: acrbilinskyi.azurecr.io/vote:latest
+    image: acrbilinskyi.azurecr.io/result:latest
     # use nodemon rather than node for local dev
     entrypoint: nodemon --inspect=0.0.0.0 server.js
     depends_on:
@@ -39,7 +39,7 @@ services:
       - back-tier
 
   worker:
-    image: acrbilinskyi.azurecr.io/vote:latest
+    image: acrbilinskyi.azurecr.io/worker:latest
     depends_on:
       redis:
         condition: service_healthy 
